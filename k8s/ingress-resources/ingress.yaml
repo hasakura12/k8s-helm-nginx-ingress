@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: echo-server-ingress
+  namespace: dev
+  annotations:
+    # needed if services expect requests from a root URL
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    # by default, the ingress will redirect http to https
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: my-service.my-company.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: my-service
+          servicePort: 9090
