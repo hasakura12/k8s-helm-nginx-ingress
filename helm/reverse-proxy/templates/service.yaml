@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "reverse-proxy.fullname" . }}
+  labels:
+{{ include "reverse-proxy.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.backendService.port }}
+      targetPort: {{ .Values.service.backendService.targetPort }}
+      protocol: TCP
+      name: {{ .Values.service.backendService.name }}
+      nodePort: {{ .Values.service.backendService.nodePort }}
+    - port: {{ .Values.service.monitoringService.port }}
+      targetPort: {{ .Values.service.monitoringService.targetPort }}
+      protocol: TCP
+      name: {{ .Values.service.monitoringService.name }}
+      nodePort: {{ .Values.service.monitoringService.nodePort }}
+  selector:
+    app.kubernetes.io/name: {{ include "reverse-proxy.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
