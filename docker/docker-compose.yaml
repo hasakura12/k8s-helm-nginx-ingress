@@ -1,0 +1,9 @@
+version: '3'
+services:
+  nginx-reverse-proxy:
+      image: hasakura12/nginx-reverse-proxy:latest
+      container_name: nginx-reverse-proxy
+      ports:
+          - 8080:8080
+          - 8081:8081
+      restart: always
