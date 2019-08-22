@@ -2,6 +2,11 @@
 
 Refs: 
 - [the official Helm Best Practice](https://helm.sh/docs/chart_best_practices)
+- [Writing Your First Helm Chart](https://tech.paulcz.net/blog/getting-started-with-helm/)
+- [How To Create Your First Helm Chart](https://docs.bitnami.com/kubernetes/how-to/create-your-first-helm-chart/)
+- [Create, Install, Upgrade, and Rollback a Helm Chart](https://dzone.com/articles/create-install-upgrade-and-rollback-a-helm-chart-p)
+- [Helm from basics to advanced](https://banzaicloud.com/blog/creating-helm-charts/)
+
 
 ```
 helm create reverse-proxy

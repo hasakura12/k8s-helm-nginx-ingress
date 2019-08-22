@@ -10,6 +10,11 @@ spec:
     matchLabels:
       app.kubernetes.io/name: {{ include "reverse-proxy.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
       labels:
