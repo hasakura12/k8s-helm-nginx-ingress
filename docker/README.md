@@ -1,16 +1,12 @@
 # Custom Nginx Docker Image <a name="custom_nginx"></a>
 
-Index
-- [Nginx.conf](#nginx_conf)
-  - reverse proxy
-  - monitoring
-- [Dockerfile](#dockerfile)
-- [Docker-compose](#nginx_docker_compose)
-- [How to Test](#how_to_test)
-
-We will create a custom Nginx Docker image with the following configs:
-- custom [nginx.conf](nginx.conf)
-- custom html
+## Requirements <a name="requirements"></a>
+For this demo, we are going to achieve the following requirements:
+![alt text](../imgs/requirement1.png "Requirement 1")
+![alt text](../imgs/requirement2.png "Requirement 2")
+- Reverse Proxy/Load balancer 127.0.0.1:8080
+- Downstream services at 10.0.0.[1-2]:9090 (which is out of scope)
+- Monitoring at 127.0.0.1:8081
 
 In short, the Nginx docker listens to port 8080 and 8081.
 ```
@@ -22,13 +18,21 @@ my-service.my-company.com:8080 -> nginx -> 10.0.0.1:9090
 127.0.0.1:8081 -> nginx -> 127.0.0.1:8081/nginx_status
 ```
 
-Dockerized and its image is available at `hasakura12/nginx-reverse-proxy:1.00`
+
+Index
+- [Nginx.conf](#nginx_conf)
+  - [reverse proxy](#reverse_proxy)
+  - [monitoring](#monitoring)
+- [Dockerfile](#dockerfile)
+- [Docker-compose](#nginx_docker_compose)
+- [How to Test](#how_to_test)
+
 
 ## Nginx.conf <a name="nginx_conf"></a>
 
 [nginx.conf](nginx.conf) contains configurations for reverse proxy on port 8080 and monitoring on port 8081.
 
-### Reverse Proxy
+### Reverse Proxy <a name="reverse_proxy"></a>
 ```
 http {
   # load balancing with round-robin as default algorithm (must be under http{} context)
@@ -60,7 +64,7 @@ http {
 }
 ```
 
-### Monitoring
+### Monitoring <a name="monitoring"></a>
 First make sure the module is enabled
 ```
 $ nginx -V 2>&1 | grep -o with-http_stub_status_module
@@ -92,8 +96,7 @@ server accepts handled requests
 Reading: 0 Writing: 1 Waiting: 0
 ```
 
-### Optional Monitoring
-#### Add Stub Status Monitoring <a name="monitoring"></a>
+### Optional Monitoring Integration
 Now third party monitoring tools can utilize info available at `/nginx_status` endpoint.
 
 One of them that we'll use to demonstrait is [amplify](https://www.tecmint.com/amplify-nginx-monitoring-tool/).
@@ -186,7 +189,7 @@ But we could store these arguments in `docker-compose.yaml` file so we could mai
 version: '3'
 services:
   nginx-reverse-proxy:
-      image: hasakura12/nginx-reverse-proxy:latest
+      image: hasakura12/nginx-reverse-proxy:1.00
       container_name: nginx-reverse-proxy
       ports:
           - 8080:8080
@@ -224,6 +227,7 @@ $ docker login
 
 $ docker push hasakura12/nginx-reverse-proxy:1.00
 ```
+Docker image is available at `hasakura12/nginx-reverse-proxy:1.00`.
 
 ## How to Test <a name="how_to_test"></a>
 ```
