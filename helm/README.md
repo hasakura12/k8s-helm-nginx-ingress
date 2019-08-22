@@ -18,7 +18,7 @@ Four yaml files are configured.
 - [deployment.yaml](reverse-proxy/templates/deployment.yaml)
 - [service.yaml](reverse-proxy/templates/service.yaml)
 - [horizontal-pod-autoscaler.yaml](reverse-proxy/templates/horizontal-pod-autoscaler.yaml)
-- [values.yaml](reverse-proxy/templates/values.yaml)
+- [values.yaml](reverse-proxy/values.yaml)
 
 For detailed explanations and walkthrough of K8s template configurations, refer to [update/rolling update and autoscaling section of main README.md](../README.md#k8s_nginx_sli).
 
