@@ -8,6 +8,11 @@ spec:
   selector:
     matchLabels:
       app: echo-server
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -18,3 +23,7 @@ spec:
         image: gcr.io/kubernetes-e2e-test-images/echoserver:2.1
         ports:
         - containerPort: 8080
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi

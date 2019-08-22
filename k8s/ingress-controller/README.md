@@ -1,4 +1,4 @@
-# Kubernetes Minikube Nginx Ingress Controller
+# Kubernetes Nginx Ingress Controller for Minikube
 There are two files in this folder:
 - `deployment.yaml`
 - `nginx.conf`
