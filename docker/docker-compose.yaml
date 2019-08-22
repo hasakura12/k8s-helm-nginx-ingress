@@ -1,7 +1,7 @@
 version: '3'
 services:
   nginx-reverse-proxy:
-      image: hasakura12/nginx-reverse-proxy:latest
+      image: hasakura12/nginx-reverse-proxy:1.00
       container_name: nginx-reverse-proxy
       ports:
           - 8080:8080
