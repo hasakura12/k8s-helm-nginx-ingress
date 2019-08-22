@@ -1,15 +1,29 @@
-## Create Helm Chart for the Nginx container
+# Create Helm Chart for the Nginx container
 
-Refs: 
-- [the official Helm Best Practice](https://helm.sh/docs/chart_best_practices)
-- [Writing Your First Helm Chart](https://tech.paulcz.net/blog/getting-started-with-helm/)
-- [How To Create Your First Helm Chart](https://docs.bitnami.com/kubernetes/how-to/create-your-first-helm-chart/)
-- [Create, Install, Upgrade, and Rollback a Helm Chart](https://dzone.com/articles/create-install-upgrade-and-rollback-a-helm-chart-p)
-- [Helm from basics to advanced](https://banzaicloud.com/blog/creating-helm-charts/)
+Index
+- [Create and Configure Helm Chart](#create)
+- [Deploy Helm Chart](#deploy)
+- [How to Test](#test)
+- [Refs](#refs)
 
+This repo is based on the Nginx docker image created in [/docker](/docker) folder.
 
+What this repo does is to package up the dockerlized Nginx into a Helm Chart so that deploying it onto Kubernetes cluster in the form of K8s deployment and service becomes easier.
+
+## Create and Configure Helm Chart <a name="create"></a>
 ```
 helm create reverse-proxy
+```
+Four yaml files are configured.
+- [deployment.yaml](deployment.yaml)
+- [service.yaml](service.yaml)
+- [horizontal-pod-autoscaler.yaml](horizontal-pod-autoscaler.yaml)
+- [values.yaml](values.yaml)
+
+For detailed explanations and walkthrough of K8s template configurations, refer to [update/rolling update and autoscaling section of main README.md](../README.md#k8s_nginx_sli).
+
+Check syntax
+```
 helm lint reverse-proxy/
 ```
 should return
@@ -183,7 +197,9 @@ spec:
           resources:
             {}
 ```
-Installation
+
+## Deploy Helm Chart <a name="deploy"></a>
+Given that a Kubernetes cluster is up and running (e.g. `minikube start`), and Helm tiller server is deployed (e.g. 'helm init`), execute
 ```
 helm install -n nginx-reverse-proxy --namespace dev reverse-proxy/
 ```
@@ -215,6 +231,7 @@ NOTES:
   echo http://$NODE_IP:$NODE_PORT
 ```
 
+## How to Test <a name="test"></a>
 Hit the Nginx reverse proxy's backend service endpoint
 ```
 curl $(minikube ip):30050/healthz
@@ -235,3 +252,10 @@ server accepts handled requests
  47 47 47
 Reading: 0 Writing: 1 Waiting: 0
 ```
+
+## Refs <a name="refs"></a>
+- [the official Helm Best Practice](https://helm.sh/docs/chart_best_practices)
+- [Writing Your First Helm Chart](https://tech.paulcz.net/blog/getting-started-with-helm/)
+- [How To Create Your First Helm Chart](https://docs.bitnami.com/kubernetes/how-to/create-your-first-helm-chart/)
+- [Create, Install, Upgrade, and Rollback a Helm Chart](https://dzone.com/articles/create-install-upgrade-and-rollback-a-helm-chart-p)
+- [Helm from basics to advanced](https://banzaicloud.com/blog/creating-helm-charts/)
