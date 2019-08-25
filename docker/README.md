@@ -26,6 +26,8 @@ Index
 - [Dockerfile](#dockerfile)
 - [Docker-compose](#nginx_docker_compose)
 - [How to Test](#how_to_test)
+  - [Manual Test](#manual_test)
+  - [Dockerlized Automated Test: BDD Test using Python Behave](#bdd_test)
 
 
 ## Nginx.conf <a name="nginx_conf"></a>
@@ -230,6 +232,7 @@ $ docker push hasakura12/nginx-reverse-proxy:1.00
 Docker image is available at `hasakura12/nginx-reverse-proxy:1.00`.
 
 ## How to Test <a name="how_to_test"></a>
+### Manual Test <a name="manual_test"></a>
 ```
 $ docker-compose up -d
 Creating network "docker_default" with the default driver
@@ -258,3 +261,13 @@ server accepts handled requests
  5 5 5 
 Reading: 0 Writing: 1 Waiting: 0 
 ```
+
+### Dockerlized Automated Test: BDD Test using Python Behave <a name="bdd_test"></a>
+We use Python BDD test framework `bahave` to test a Nginx image.
+
+Simply execute the script:
+```
+$ ./automated_test.sh
+```
+
+For more details about implementations of dockerlized Python BDD tests, refere to [test/README.md](test/README.md).
