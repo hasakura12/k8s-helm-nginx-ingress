@@ -1,0 +1,16 @@
+version: '3'
+services:
+  behave:
+    image: hasakura12/nginx-reverse-proxy-python-behave-test:1.00
+    container_name: nginx-reverse-proxy-python-behave-test
+    volumes:
+      - "./python-behave-test:/usr/src/python-behave-test:ro"
+    env_file:
+      - ./test.env
+  nginx:
+      image: hasakura12/nginx-reverse-proxy:1.00
+      container_name: nginx-reverse-proxy
+      ports:
+          - 8080:8080
+          - 8081:8081
+      restart: always
