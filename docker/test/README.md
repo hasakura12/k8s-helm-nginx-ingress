@@ -35,7 +35,7 @@ nginx-reverse-proxy-python-behave-test exited with code 0
 ### Test locally
 When running locally, you **need** to start Nginx container manually first
 ```
-# start nginx-demo docker image first
+# start nginx-reverse-proxy docker image first
 $ cd ../
 $ docker-compose up -d
 
@@ -62,7 +62,7 @@ Took 0m0.066s
 ```
 
 ### Test using Docker Image
-When running using docker images, `docker-compose.yaml` will take care of starting both `nginx-demo` and `nginx-reverse-proxy-python-behave-test` images. So you need to make sure that Nginx container is **NOT** running prior to this otherwise port will be occupied.
+When running using docker images, `docker-compose.yaml` will take care of starting both `nginx-reverse-proxy` and `nginx-reverse-proxy-python-behave-test` images. So you need to make sure that Nginx container is **NOT** running prior to this otherwise port will be occupied.
 ```
 # change dir to /nginx/test
 
@@ -97,7 +97,7 @@ services:
 `nginx-reverse-proxy-python-behave-test` container will run tests by making http request. After that it exits, so you will not see it running if you do `docker ps`
 ```
 CONTAINER ID        IMAGE                        COMMAND                  CREATED              STATUS              PORTS                                                                          NAMES
-d5f784285a8d        hasakura12/nginx-demo:1.00   "/bin/sh -c 'exec ng…"   About a minute ago   Up 1 second         0.0.0.0:443->443/tcp, 0.0.0.0:8081->8081/tcp, 80/tcp, 0.0.0.0:8080->8080/tcp   nginx
+d5f784285a8d        hasakura12/nginx-reverse-proxy:1.00   "/bin/sh -c 'exec ng…"   About a minute ago   Up 1 second         0.0.0.0:443->443/tcp, 0.0.0.0:8081->8081/tcp, 80/tcp, 0.0.0.0:8080->8080/tcp   nginx
 Hisashis-MacBook-Pro:test hisashi.asakura$ docker ps -a
 ```
 
