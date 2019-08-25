@@ -87,10 +87,9 @@ services:
     env_file:
       - ./test.env
   nginx:
-      image: hasakura12/nginx-demo:1.00
-      container_name: nginx
+      image: hasakura12/nginx-reverse-proxy:1.00
+      container_name: nginx-reverse-proxy
       ports:
-          - 443:443
           - 8080:8080
           - 8081:8081
       restart: always
