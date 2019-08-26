@@ -10,7 +10,7 @@ Index
   - [Autoscaling](#k8s_nginx_sli_autoscalling)
   - [How to Test](#k8s_nginx_sli_test)
 - [Cleanup](#cleanup)
-- [(Advanced) Get Further (Use Kubernetes Nginz Ingress Controller)](#get_further)
+- [(Advanced) Get Further (Use Kubernetes Nginx Ingress Controller)](#get_further)
 
 ## Requirements <a name="requirements"></a>
 For this demo, we are going to achieve the following requirements:
@@ -323,7 +323,7 @@ $ helm del --purge nginx-reverse-proxy
 $ minikube delete
 ```
 
-## (Advanced) Get Further (Use Kubernetes Nginz Ingress Controller) <a name="get_further"></a>
+## (Advanced) Get Further (Use Kubernetes Nginx Ingress Controller) <a name="get_further"></a>
 In the above example, we deployed a standalone Nginx server to Kubernetes.
 
 However, Kubernetes provides an Ingress Controller using Nginx. Also, we will deploy `Prometheus`, `Grafana`, and `K8s Dashboard` as monitoring solutions to the K8s cluster and expose them through the Ingress Controller.
