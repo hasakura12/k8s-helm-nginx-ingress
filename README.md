@@ -136,6 +136,31 @@ Reading: 0 Writing: 1 Waiting: 0
 ```
 
 ## Define and Implement SLI for Nginx <a name="k8s_nginx_sli"></a>
+### NOTE: `HorizontalPodAutoscaler` implementation is already a part of the helm chart [reverse-proxy](helm/reverse-proxy/). Below is just explanations of the implementation. All left for you to do is deploy metrics server and enable heapster Minikube addons for `HorizontalPodAutoscaler` to work properly.
+
+### TL;DR
+Enable heapster minikube addons and deploy metrics server, so that [HorizontalPodAutoscaler](helm/reverse-proxy/templates/horizontal-pod-autoscaler.yaml) can get Pod's metrics for autoscaling.
+```
+# BEFORE deploying metrics server, TARGETS metrics shows "<unknown>/50%"
+$ kubectl get hpa -n dev nginx-reverse-proxy
+
+NAMESPACE   NAME                                                      REFERENCE                        TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+dev         horizontalpodautoscaler.autoscaling/nginx-reverse-proxy   Deployment/nginx-reverse-proxy   <unknown>/50%   2         5         2          7m34s
+
+
+
+# AFTER deploying metrics server, TARGETS metrics shows "2%/50%"
+$ minikube addons enable heapster
+$ kubectl apply -f metrics-server/deploy/1.8+
+
+# Wait a few minutes for metrics server to be deploped
+
+$ kubectl get hpa -n dev nginx-reverse-proxy
+NAMESPACE   NAME                                                      REFERENCE                        TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+dev         horizontalpodautoscaler.autoscaling/nginx-reverse-proxy   Deployment/nginx-reverse-proxy   2%/50%    2         5         2          8m46s
+```
+
+### HorizontalPodAutoscaler and Rolling Update Implementation
 For the Nginx to be performant, reliable, and scalable, we will define strategies for update, rollback, and scaling in [deployment.yaml](helm/reverse-proxy/templates/deployment.yaml) and [horizontal-pod-autoscaler.yaml](helm/reverse-proxy/templates/horizontal-pod-autoscaler.yaml).
 
 For demo purpose, let's define our SLI such that:
