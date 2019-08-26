@@ -151,7 +151,18 @@ dev         horizontalpodautoscaler.autoscaling/nginx-reverse-proxy   Deployment
 
 # AFTER deploying metrics server, TARGETS metrics shows "2%/50%"
 $ minikube addons enable heapster
+$ git clone https://github.com/kubernetes-incubator/metrics-server.git
 $ kubectl apply -f metrics-server/deploy/1.8+
+
+# Edit the deploy/1.8+/metrics-server-deployment.yaml 
+
+# containers:
+# - name: metrics-server
+#    image: k8s.gcr.io/metrics-server-amd64:v0.3.1
+#    command:
+#      - /metrics-server
+#      - --kubelet-insecure-tls
+#      - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
 
 # Wait a few minutes for metrics server to be deploped
 
