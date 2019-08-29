@@ -24,6 +24,20 @@ Index
 - [Documentations](#doc)
 - [Refs](#refs)
 
+## Prerequisite
+- aws CLI
+- eksctl
+- kubectl
+- helm
+
+```
+$ brew install aws-iam-authenticator
+$ brew tap weaveworks/tap
+$ brew install weaveworks/tap/eksctl
+$ brew install kubernetes-cli
+$ brew install kubernetes-helm
+```
+
 ## Assumptions <a name="assumptions"></a>
 What we will accomplish is following:
 ```

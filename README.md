@@ -26,6 +26,12 @@ For this demo, we are going to achieve the following requirements:
 - docker
 - kubectl
 - helm
+```
+$ brew install aws-iam-authenticator
+$ brew tap weaveworks/tap
+$ brew install kubernetes-cli
+$ brew install kubernetes-helm
+```
 
 ## Project Structure <a name="project_structure"></a>
 ```
