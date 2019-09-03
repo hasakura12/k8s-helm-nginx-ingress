@@ -170,7 +170,7 @@ $ kubectl apply -f metrics-server/deploy/1.8+
 #      - --kubelet-insecure-tls
 #      - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
 
-# Wait a few minutes for metrics server to be deploped
+# Wait a few minutes for metrics server to be deployed
 
 $ kubectl get hpa -n dev nginx-reverse-proxy
 NAMESPACE   NAME                                                      REFERENCE                        TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
@@ -213,7 +213,7 @@ For Minikube, we need to enable `heapster` addons:
 $ minikube addons enable heapster
 ```
 
-Next, generate a yaml file for `HorizontalPodAutoscaler`, which is located in [horizontal-pod-autoscaler.yaml](helm/reverse-proxy/templates/horizontal-pod-autoscaler.yaml)
+Next, generate a yaml file for `HorizontalPodAutoscaler`, which is located at [horizontal-pod-autoscaler.yaml](helm/reverse-proxy/templates/horizontal-pod-autoscaler.yaml)
 ```
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -264,11 +264,11 @@ resources:
     memory: 128Mi
 ```
 
-Finally, we need to deploy metric-server and we could do it by `minikube addons enable metric-server`, but there is a known issue ([Docker Kubernetes (Mac) - Autoscaler unable to find metrics](https://stackoverflow.com/questions/54106725/docker-kubernetes-mac-autoscaler-unable-to-find-metrics)). So we need to have a workaround by editing a deployment.yaml.
+Finally, we need to deploy metric-server. We could do so by `minikube addons enable metric-server`, but there is a known issue ([Docker Kubernetes (Mac) - Autoscaler unable to find metrics](https://stackoverflow.com/questions/54106725/docker-kubernetes-mac-autoscaler-unable-to-find-metrics)). So we need to manually deploy it as a workaround.
 ```
 $ git clone https://github.com/kubernetes-incubator/metrics-server.git
 ```
-Edit the deploy/1.8+/metrics-server-deployment.yaml 
+Edit the deploy/1.8+/metrics-server-deployment.yaml
 ```
 containers:
 - name: metrics-server
@@ -309,8 +309,7 @@ $ kubectl run -i --tty load-generator --image=busybox -n dev /bin/sh
 ```
 Load test the `nginx-reverse-proxy` service from within the pod
 ```
-$ while true; do wget -q -O- http://nginx-reverse-proxy
-:8081/nginx_status; done
+$ while true; do wget -q -O- http://nginx-reverse-proxy:8081/nginx_status; done
 ```
 
 And you will see new replicas being created by scaling up (note: autoscaling takes a few mins)
