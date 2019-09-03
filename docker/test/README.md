@@ -36,7 +36,9 @@ nginx-reverse-proxy-python-behave-test exited with code 0
 When running locally, you **need** to start Nginx container manually first
 ```
 # start nginx-reverse-proxy docker image first
-$ cd ../
+$ PWD
+/k8s-helm-nginx-ingress/docker
+
 $ docker-compose up -d
 
 $ cd test
@@ -64,7 +66,9 @@ Took 0m0.066s
 ### Test using Docker Image
 When running using docker images, `docker-compose.yaml` will take care of starting both `nginx-reverse-proxy` and `nginx-reverse-proxy-python-behave-test` images. So you need to make sure that Nginx container is **NOT** running prior to this otherwise port will be occupied.
 ```
-# change dir to /nginx/test
+# change dir to /docker/test
+$ PWD
+/k8s-helm-nginx-ingress/docker/test
 
 $ docker build -t hasakura12/nginx-reverse-proxy-python-behave-test .
 $ docker tag hasakura12/nginx-reverse-proxy-python-behave-test hasakura12/nginx-reverse-proxy-python-behave-test:1.00
